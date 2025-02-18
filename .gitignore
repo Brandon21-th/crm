@@ -1,0 +1,12 @@
+# Ignorar la carpeta node_modules
+node_modules/
+
+# Ignorar archivos de entorno y configuración
+.env
+
+
+# Ignorar archivos de logs y caché
+*.log
+.cache/
+
+# Ignorar archivos del sistema (para Mac y Windows)
