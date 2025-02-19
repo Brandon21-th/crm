@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Empresa = sequelize.define('Empresa', {
+const Empresa = sequelize.define('tempresa', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -13,8 +13,7 @@ const Empresa = sequelize.define('Empresa', {
   },
   domicilio_empresa: {
     type: DataTypes.STRING(150),
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   nombre_contacto: {
     type: DataTypes.STRING(80),
@@ -27,15 +26,26 @@ const Empresa = sequelize.define('Empresa', {
   email_contacto: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       isEmail: true
     }
   },
-  activo: {
+  activa: {
     type: DataTypes.ENUM('activo', 'suspendido'),
     defaultValue: 'activo'
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
   }
+}, {
+  timestamps: true
 });
 
 module.exports = Empresa;
