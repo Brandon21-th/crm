@@ -13,6 +13,15 @@ app.use('/api', empresaRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+const path = require('path');
+
+// Servir archivos estáticos desde la carpeta 'src/views'
+app.use(express.static(path.join(__dirname, 'src', 'views')));
+
+app.get('/views/empresas', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'views', 'empresas', 'index.html'));
+});
+
 // Iniciar el servidor
 app.listen(PORT, async () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
