@@ -10,15 +10,17 @@ exports.crearEmpresa = async (req, res) => {
   }
 };
 
-// Obtener todas las empresas
+// Obtener todas las empresas activas
 exports.obtenerEmpresas = async (req, res) => {
   try {
-    const empresas = await Empresa.findAll();
+    const empresas = await Empresa.findAll({ where: { activa: 'activo' } });
     res.status(200).json({ success: true, data: empresas });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    console.error('Error al obtener empresas activas:', error);
+        res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 // Obtener una empresa por ID
 exports.obtenerEmpresa = async (req, res) => {
@@ -44,6 +46,20 @@ exports.actualizarEmpresa = async (req, res) => {
     res.status(200).json({ success: true, data: empresa });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+// Suspender una empresa (actualizar el campo activo)
+exports.suspenderEmpresa = async (req, res) => {
+  try {
+    const empresa = await Empresa.findByPk(req.params.id);
+    if (!empresa) {
+      return res.status(404).json({ success: false, message: 'Empresa no encontrada' });
+    }
+    await empresa.update({ activa: 'suspendido' });
+    res.status(200).json({ success: true, data: empresa });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 

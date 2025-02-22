@@ -6,6 +6,6 @@ router.post('/empresas', empresaController.crearEmpresa);
 router.get('/empresas', empresaController.obtenerEmpresas);
 router.get('/empresas/:id', empresaController.obtenerEmpresa);
 router.put('/empresas/:id', empresaController.actualizarEmpresa);
-router.delete('/empresas/:id', empresaController.eliminarEmpresa);
+router.put('/empresas/:id/suspender', empresaController.suspenderEmpresa);
 
 module.exports = router;
