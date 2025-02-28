@@ -21,36 +21,14 @@
     <div class="container mt-5">
         <h2 class="text-center">Empresas</h2>
 
-        <!-- Formulario para agregar empresa -->
-        <div class="card p-4 mt-4">
-            <h4>Registrar Empresa</h4>
-            <form id="empresaForm">
-                <div class="mb-3">
-                    <label for="nombre_empresa" class="form-label">Nombre empresa:</label>
-                    <input type="text" class="form-control" id="nombre_empresa" required />
-                </div>
-                <div class="mb-3">
-                    <label for="domicilio_empresa" class="form-label">Domicilio empresa:</label>
-                    <input type="text" class="form-control" id="domicilio_empresa" required />
-                </div>
-                <div class="mb-3">
-                    <label for="nombre_contacto" class="form-label">Nombre del contacto:</label>
-                    <input type="text" class="form-control" id="nombre_contacto" />
-                </div>
-                <div class="mb-3">
-                    <label for="tel_contacto" class="form-label">Teléfono:</label>
-                    <input type="text" class="form-control" id="tel_contacto" />
-                </div>
-                <div class="mb-3">
-                    <label for="email_contacto" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email_contacto" required />
-                </div>
-                <button type="submit" class="btn btn-success">Guardar</button>
-            </form>
+        <!-- Botón para abrir el modal de registro -->
+        <div class="text-end mb-3">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registrarEmpresaModal">
+                Registrar Empresa
+            </button>
         </div>
 
         <!-- Tabla para mostrar empresas -->
-
         <div class="card mt-4">
             <div class="card-body">
                 <h4>Empresas Registradas</h4>
@@ -73,6 +51,45 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para registrar empresa -->
+    <div class="modal fade" id="registrarEmpresaModal" tabindex="-1" aria-labelledby="registrarEmpresaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrarEmpresaModalLabel">Registrar Empresa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="empresaForm">
+                        <div class="mb-3">
+                            <label for="nombre_empresa" class="form-label">Nombre empresa:</label>
+                            <input type="text" class="form-control" id="nombre_empresa" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="domicilio_empresa" class="form-label">Domicilio empresa:</label>
+                            <input type="text" class="form-control" id="domicilio_empresa" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre_contacto" class="form-label">Nombre del contacto:</label>
+                            <input type="text" class="form-control" id="nombre_contacto" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="tel_contacto" class="form-label">Teléfono:</label>
+                            <input type="text" class="form-control" id="tel_contacto" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_contacto" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email_contacto" required />
+                        </div>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal para editar empresa -->
     <div class="modal fade" id="editarEmpresaModal" tabindex="-1" aria-labelledby="editarEmpresaModalLabel"
         aria-hidden="true">
