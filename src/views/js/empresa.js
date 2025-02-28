@@ -109,9 +109,90 @@ function suspenderEmpresa(id) {
     }
 }
 
+// Función para mostrar mensajes de error
+function mostrarError(campo, mensaje) {
+    const errorDiv = campo.nextElementSibling;
+    errorDiv.textContent = mensaje;
+    campo.classList.add("is-invalid");
+}
+
+// Función para limpiar mensajes de error
+function limpiarErrores(formulario) {
+    const campos = formulario.querySelectorAll(".is-invalid");
+    campos.forEach(campo => {
+        campo.classList.remove("is-invalid");
+        const errorDiv = campo.nextElementSibling;
+        if (errorDiv) {
+            errorDiv.textContent = "";
+        }
+    });
+}
+
+// Función para validar el formulario
+function validarFormulario(formulario) {
+    limpiarErrores(formulario);
+
+    const nombreEmpresa = formulario.querySelector("#nombre_empresa") || formulario.querySelector("#editarNombreEmpresa");
+    const domicilioEmpresa = formulario.querySelector("#domicilio_empresa") || formulario.querySelector("#editarDomicilioEmpresa");
+    const nombreContacto = formulario.querySelector("#nombre_contacto") || formulario.querySelector("#editarNombreContacto");
+    const telContacto = formulario.querySelector("#tel_contacto") || formulario.querySelector("#editarTelContacto");
+    const emailContacto = formulario.querySelector("#email_contacto") || formulario.querySelector("#editarEmailContacto");
+
+    let esValido = true;
+
+    if (!nombreEmpresa.value.trim()) {
+        mostrarError(nombreEmpresa, "El nombre de la empresa es obligatorio.");
+        esValido = false;
+    }
+
+    if (!domicilioEmpresa.value.trim()) {
+        mostrarError(domicilioEmpresa, "El domicilio de la empresa es obligatorio.");
+        esValido = false;
+    }
+
+    if (!nombreContacto.value.trim()) {
+        mostrarError(nombreContacto, "El nombre del contacto es obligatorio.");
+        esValido = false;
+    } else {
+        const nombreRegex = /^[A-Za-z\s]+$/;
+        if (!nombreRegex.test(nombreContacto.value)) {
+            mostrarError(nombreContacto, "El nombre del contacto solo debe contener letras.");
+            esValido = false;
+        }
+    }
+
+    if (!telContacto.value.trim()) {
+        mostrarError(telContacto, "El teléfono es obligatorio.");
+        esValido = false;
+    } else {
+        const telefonoRegex = /^\d{10}$/;
+        if (!telefonoRegex.test(telContacto.value)) {
+            mostrarError(telContacto, "El teléfono debe tener 10 dígitos.");
+            esValido = false;
+        }
+    }
+
+    if (!emailContacto.value.trim()) {
+        mostrarError(emailContacto, "El correo electrónico es obligatorio.");
+        esValido = false;
+    } else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailContacto.value)) {
+            mostrarError(emailContacto, "El correo electrónico no es válido.");
+            esValido = false;
+        }
+    }
+
+    return esValido;
+}
+
 // Función para actualizar una empresa
 $("#editarEmpresaForm").submit(function (event) {
     event.preventDefault();
+
+    if (!validarFormulario(this)) {
+        return;
+    }
 
     const empresaActualizada = {
         nombre_empresa: $("#editarNombreEmpresa").val(),
@@ -143,6 +224,10 @@ $("#editarEmpresaForm").submit(function (event) {
 $("#empresaForm").submit(function (event) {
     event.preventDefault();
 
+    if (!validarFormulario(this)) {
+        return;
+    }
+
     const nuevaEmpresa = {
         nombre_empresa: $("#nombre_empresa").val(),
         domicilio_empresa: $("#domicilio_empresa").val(),
@@ -151,42 +236,21 @@ $("#empresaForm").submit(function (event) {
         email_contacto: $("#email_contacto").val()
     };
 
-    const empresaId = $("#empresaId").val();
-
-    if (empresaId) {
-        // Actualizar empresa existente
-        $.ajax({
-            url: `${API_URL}/${empresaId}`,
-            type: "PUT",
-            contentType: "application/json",
-            data: JSON.stringify(nuevaEmpresa),
-            success: function () {
-                alert("Empresa actualizada con éxito.");
-                $("#empresaForm")[0].reset();
-                $("#empresaId").val("");
-                cargarEmpresas();
-            },
-            error: function () {
-                alert("Error al actualizar la empresa.");
-            }
-        });
-    } else {
-        // Crear nueva empresa
-        $.ajax({
-            url: API_URL,
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(nuevaEmpresa),
-            success: function () {
-                alert("Empresa registrada con éxito.");
-                $("#empresaForm")[0].reset();
-                cargarEmpresas();
-            },
-            error: function () {
-                alert("Error al registrar la empresa.");
-            }
-        });
-    }
+    $.ajax({
+        url: API_URL,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(nuevaEmpresa),
+        success: function () {
+            alert("Empresa registrada con éxito.");
+            $("#empresaForm")[0].reset();
+            $("#registrarEmpresaModal").modal("hide");
+            cargarEmpresas();
+        },
+        error: function () {
+            alert("Error al registrar la empresa.");
+        }
+    });
 });
 
 // Cargar empresas al cargar la página

@@ -66,22 +66,27 @@
                         <div class="mb-3">
                             <label for="nombre_empresa" class="form-label">Nombre empresa:</label>
                             <input type="text" class="form-control" id="nombre_empresa" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="domicilio_empresa" class="form-label">Domicilio empresa:</label>
                             <input type="text" class="form-control" id="domicilio_empresa" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="nombre_contacto" class="form-label">Nombre del contacto:</label>
-                            <input type="text" class="form-control" id="nombre_contacto" />
+                            <input type="text" class="form-control" id="nombre_contacto" pattern="[A-Za-z\s]+" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="tel_contacto" class="form-label">Teléfono:</label>
-                            <input type="text" class="form-control" id="tel_contacto" />
+                            <input type="text" class="form-control" id="tel_contacto" pattern="\d{10}" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="email_contacto" class="form-label">Email:</label>
                             <input type="email" class="form-control" id="email_contacto" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </form>
@@ -105,22 +110,27 @@
                         <div class="mb-3">
                             <label for="editarNombreEmpresa" class="form-label">Nombre empresa:</label>
                             <input type="text" class="form-control" id="editarNombreEmpresa" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="editarDomicilioEmpresa" class="form-label">Domicilio empresa:</label>
                             <input type="text" class="form-control" id="editarDomicilioEmpresa" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="editarNombreContacto" class="form-label">Nombre del contacto:</label>
-                            <input type="text" class="form-control" id="editarNombreContacto" />
+                            <input type="text" class="form-control" id="editarNombreContacto" pattern="[A-Za-z\s]+" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="editarTelContacto" class="form-label">Teléfono:</label>
-                            <input type="text" class="form-control" id="editarTelContacto" />
+                            <input type="text" class="form-control" id="editarTelContacto" pattern="\d{10}" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="editarEmailContacto" class="form-label">Email:</label>
                             <input type="email" class="form-control" id="editarEmailContacto" required />
+                            <div class="invalid-feedback"></div>
                         </div>
                         <button type="submit" class="btn btn-secondary">Actualizar</button>
                     </form>
