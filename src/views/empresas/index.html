@@ -15,23 +15,46 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
+    <!-- Estilos personalizados -->
+    <style>
+     
+         .nueva_empresa{
+            background-color: #198754;
+            color: white;
+         }
+
+         .actualiza_empresa{
+            background-color: #0dcaf0;
+            color: white;
+         }
+
+        .elimina_empresa{
+                background-color: #dc3545;
+                color: white;
+        }
+
+        .modal-body {
+            font-size: 1.1em;
+        }
+    </style>
+
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Empresas</h2>
+        <h2 class="text-center">Empresas Operando</h2>
 
         <!-- Botón para abrir el modal de registro -->
         <div class="text-end mb-3">
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registrarEmpresaModal">
-                Registrar Empresa
+                Nuevo
             </button>
         </div>
 
         <!-- Tabla para mostrar empresas -->
         <div class="card mt-4">
             <div class="card-body">
-                <h4>Empresas Registradas</h4>
+              
                 <table id="empresaTable" class="table table-striped">
                     <thead>
                         <tr>
@@ -57,7 +80,7 @@
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header nueva_empresa">
                     <h5 class="modal-title" id="registrarEmpresaModalLabel">Registrar Empresa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -100,7 +123,7 @@
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header actualiza_empresa">
                     <h5 class="modal-title" id="editarEmpresaModalLabel">Editar Empresa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -132,8 +155,26 @@
                             <input type="email" class="form-control" id="editarEmailContacto" required />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <button type="submit" class="btn btn-secondary">Actualizar</button>
+                        <button type="submit" class="btn btn-info actualiza_empresa">Actualizar</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal genérico para mensajes -->
+    <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header elimina_empresa">
+                    <h5 class="modal-title" id="mensajeModalLabel">Mensaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="mensajeModalBody">
+                    <!-- Mensaje dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

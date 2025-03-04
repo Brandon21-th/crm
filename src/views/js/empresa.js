@@ -65,7 +65,7 @@ function cargarEmpresas() {
             });
         },
         error: function () {
-            alert("Error al obtener las empresas.");
+            mostrarMensaje("Error al obtener las empresas.", "error");
         }
     });
 }
@@ -86,7 +86,7 @@ function abrirEditarEmpresaModal(id) {
             $("#editarEmpresaModal").modal("show");
         },
         error: function () {
-            alert("Error al obtener la empresa.");
+            mostrarMensaje("Error al obtener la empresa.", "error");
         }
     });
 }
@@ -99,11 +99,11 @@ function suspenderEmpresa(id) {
             type: "PUT",
             contentType: "application/json",
             success: function () {
-                alert("Empresa suspendida correctamente.");
+                mostrarMensaje("Empresa suspendida correctamente.", "success");
                 cargarEmpresas();
             },
             error: function () {
-                alert("Error al suspender la empresa.");
+                mostrarMensaje("Error al suspender la empresa.", "error");
             }
         });
     }
@@ -186,6 +186,14 @@ function validarFormulario(formulario) {
     return esValido;
 }
 
+// Función para mostrar mensajes en el modal genérico
+function mostrarMensaje(mensaje, tipo) {
+    const mensajeModal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+    const mensajeModalBody = document.getElementById('mensajeModalBody');
+    mensajeModalBody.textContent = mensaje;
+    mensajeModal.show();
+}
+
 // Función para actualizar una empresa
 $("#editarEmpresaForm").submit(function (event) {
     event.preventDefault();
@@ -210,12 +218,12 @@ $("#editarEmpresaForm").submit(function (event) {
         contentType: "application/json",
         data: JSON.stringify(empresaActualizada),
         success: function () {
-            alert("Empresa actualizada con éxito.");
+            mostrarMensaje("Empresa actualizada con éxito.", "success");
             $("#editarEmpresaModal").modal("hide");
             cargarEmpresas();
         },
         error: function () {
-            alert("Error al actualizar la empresa.");
+            mostrarMensaje("Error al actualizar la empresa.", "error");
         }
     });
 });
@@ -242,13 +250,13 @@ $("#empresaForm").submit(function (event) {
         contentType: "application/json",
         data: JSON.stringify(nuevaEmpresa),
         success: function () {
-            alert("Empresa registrada con éxito.");
+            mostrarMensaje("Empresa registrada con éxito.", "success");
             $("#empresaForm")[0].reset();
             $("#registrarEmpresaModal").modal("hide");
             cargarEmpresas();
         },
         error: function () {
-            alert("Error al registrar la empresa.");
+            mostrarMensaje("Error al registrar la empresa.", "error");
         }
     });
 });
