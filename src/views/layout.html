@@ -38,6 +38,12 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
                         <li class="nav-item">
+                            <a href="#" class="nav-link" onclick="cargarPagina('layout.html')">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link" onclick="cargarPagina('empresas/')">
                                 <i class="nav-icon fas fa-building"></i>
                                 <p>Empresas</p>
@@ -63,8 +69,67 @@
         <!-- Contenido Principal -->
         <div class="content-wrapper p-3">
             <div id="contenido">
-                <h2>Bienvenido al CRM</h2>
-                <p>Selecciona una opción del menú.</p>
+                <div class="container-fluid">
+                    <h2>Dashboard</h2>
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>150</h3>
+                                    <p>Nuevas Órdenes</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                    <p>Incremento de Ventas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>44</h3>
+                                    <p>Usuarios Registrados</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>65</h3>
+                                    <p>Visitantes Únicos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -75,9 +140,22 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
     <script>
-        function cargarPagina(pagina) {
-            $("#contenido").load(pagina);
+     let scriptLoaded = false;
+
+function cargarPagina(pagina) {
+    $("#contenido").load(pagina, function(response, status, xhr) {
+        if (status == "error") {
+            console.log("Error al cargar la página: " + xhr.status + " " + xhr.statusText);
+        } else {
+            // Evitar cargar el script de nuevo
+            if (pagina === 'src/views/empresas/index.html' && !scriptLoaded) {
+                $.getScript('/crm/src/views/js/empresa.js', function() {
+                    scriptLoaded = true;
+                });
+            }
         }
+    });
+}
     </script>
 
 </body>
