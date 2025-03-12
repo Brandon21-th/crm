@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const sequelize = require('./src/config/database');
 const empresaRoutes = require('./src/routes/empresaRoutes');
+const sucursalRoutes = require('./src/routes/sucursalRoutes');
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api', empresaRoutes);
+app.use('/api', sucursalRoutes);
 
 const PORT = process.env.PORT || 5000;
 
