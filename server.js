@@ -29,6 +29,10 @@ app.get('/views/layout.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'views', 'layout.html'));
 });
 
+app.get('/views/sucursales', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'views', 'sucursales', 'index.html'));
+})
+
 // Iniciar el servidor
 app.listen(PORT, async () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);

@@ -105,19 +105,9 @@ const Sucursal = sequelize.define('tsucursale', {
     activa: {
         type: DataTypes.STRING(2),
         allowNull: false
-    },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
     }
 }, {
-    timestamps: true
+    timestamps: false
 });
 
 // Definir la relación de llave foránea
