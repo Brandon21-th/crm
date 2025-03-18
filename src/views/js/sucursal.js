@@ -1,20 +1,18 @@
 (function() {
     const API_URL = "http://localhost:5000/api/sucursales";
-    const EMPRESA_API_URL = "http://localhost:5000/api/empresas";
 
-    // Función para obtener y mostrar sucursales activas
+    // Función para obtener y mostrar empresas activas
     function cargarSucursales() {
         $.ajax({
             url: API_URL,
             type: "GET",
             success: function (response) {
-                const sucursales = response;
+                const sucursales = response.data;
                 let tableContent = "";
                 sucursales.forEach(sucursal => {
                     tableContent += `
                         <tr>
                             <td>${sucursal.id}</td>
-                            <td>${sucursal.Empresa.nombre_empresa}</td>
                             <td>${sucursal.nombre_sucursal}</td>
                             <td>${sucursal.telefono}</td>
                             <td>${sucursal.email_fiscal}</td>
@@ -71,42 +69,23 @@
         });
     }
 
-    // Función para cargar las opciones de empresas en el formulario
-    function cargarEmpresas() {
-        $.ajax({
-            url: EMPRESA_API_URL,
-            type: "GET",
-            success: function (response) {
-                const empresas = response;
-                let opciones = "";
-                empresas.forEach(empresa => {
-                    opciones += `<option value="${empresa.id}">${empresa.nombre_empresa}</option>`;
-                });
-                $("#id_empresa").html(opciones);
-                $("#editarIdEmpresa").html(opciones);
-            },
-            error: function () {
-                mostrarMensaje("Error al obtener las empresas.", "error");
-            }
-        });
-    }
-
-    // Función para abrir el modal de editar sucursal
-    window.abrirEditarSucursalModal = function(id) {
+    // Función para abrir el modal de editar empresa
+    window.abrirEditarEmpresaModal = function(id) {
         $.ajax({
             url: `${API_URL}/${id}`,
             type: "GET",
             success: function (response) {
-                const sucursal = response;
-                $("#editarSucursalId").val(sucursal.id);
-                $("#editarIdEmpresa").val(sucursal.id_empresa);
-                $("#editarNombreSucursal").val(sucursal.nombre_sucursal);
-                $("#editarTelefono").val(sucursal.telefono);
-                $("#editarEmailFiscal").val(sucursal.email_fiscal);
-                $("#editarSucursalModal").modal("show");
+                const empresa = response.data;
+                $("#editarEmpresaId").val(empresa.id);
+                $("#editarNombreEmpresa").val(empresa.nombre_empresa);
+                $("#editarDomicilioEmpresa").val(empresa.domicilio_empresa);
+                $("#editarNombreContacto").val(empresa.nombre_contacto);
+                $("#editarTelContacto").val(empresa.tel_contacto);
+                $("#editarEmailContacto").val(empresa.email_contacto);
+                $("#editarEmpresaModal").modal("show");
             },
             error: function () {
-                mostrarMensaje("Error al obtener la sucursal.", "error");
+                mostrarMensaje("Error al obtener la empresa.", "error");
             }
         });
     }
@@ -118,18 +97,18 @@
         $('#confirmarSuspensionModal').modal('show');
     }
 
-    // Función para suspender una sucursal
-    window.suspenderSucursal = function(id) {
+    // Función para suspender una empresa
+    window.suspenderEmpresa = function(id) {
         $.ajax({
             url: `${API_URL}/${id}/suspender`,
             type: "PUT",
             contentType: "application/json",
             success: function () {
-                mostrarMensaje("Sucursal suspendida correctamente.", "success");
-                cargarSucursales();
+                mostrarMensaje("Empresa suspendida correctamente.", "success");
+                cargarEmpresas();
             },
             error: function () {
-                mostrarMensaje("Error al suspender la sucursal.", "error");
+                mostrarMensaje("Error al suspender la empresa.", "error");
             }
         });
     }
@@ -157,35 +136,53 @@
     function validarFormulario(formulario) {
         limpiarErrores(formulario);
 
-        const idEmpresa = formulario.querySelector("#id_empresa") || formulario.querySelector("#editarIdEmpresa");
-        const nombreSucursal = formulario.querySelector("#nombre_sucursal") || formulario.querySelector("#editarNombreSucursal");
-        const telefono = formulario.querySelector("#telefono") || formulario.querySelector("#editarTelefono");
-        const emailFiscal = formulario.querySelector("#email_fiscal") || formulario.querySelector("#editarEmailFiscal");
+        const nombreEmpresa = formulario.querySelector("#nombre_empresa") || formulario.querySelector("#editarNombreEmpresa");
+        const domicilioEmpresa = formulario.querySelector("#domicilio_empresa") || formulario.querySelector("#editarDomicilioEmpresa");
+        const nombreContacto = formulario.querySelector("#nombre_contacto") || formulario.querySelector("#editarNombreContacto");
+        const telContacto = formulario.querySelector("#tel_contacto") || formulario.querySelector("#editarTelContacto");
+        const emailContacto = formulario.querySelector("#email_contacto") || formulario.querySelector("#editarEmailContacto");
 
         let esValido = true;
 
-        if (!idEmpresa.value.trim()) {
-            mostrarError(idEmpresa, "La empresa es obligatoria.");
+        if (!nombreEmpresa.value.trim()) {
+            mostrarError(nombreEmpresa, "El nombre de la empresa es obligatorio.");
             esValido = false;
         }
 
-        if (!nombreSucursal.value.trim()) {
-            mostrarError(nombreSucursal, "El nombre de la sucursal es obligatorio.");
+        if (!domicilioEmpresa.value.trim()) {
+            mostrarError(domicilioEmpresa, "El domicilio de la empresa es obligatorio.");
             esValido = false;
         }
 
-        if (!telefono.value.trim()) {
-            mostrarError(telefono, "El teléfono es obligatorio.");
+        if (!nombreContacto.value.trim()) {
+            mostrarError(nombreContacto, "El nombre del contacto es obligatorio.");
             esValido = false;
+        } else {
+            const nombreRegex = /^[A-Za-z\s]+$/;
+            if (!nombreRegex.test(nombreContacto.value)) {
+                mostrarError(nombreContacto, "El nombre del contacto solo debe contener letras.");
+                esValido = false;
+            }
         }
 
-        if (!emailFiscal.value.trim()) {
-            mostrarError(emailFiscal, "El correo electrónico es obligatorio.");
+        if (!telContacto.value.trim()) {
+            mostrarError(telContacto, "El teléfono es obligatorio.");
+            esValido = false;
+        } else {
+            const telefonoRegex = /^\d{10}$/;
+            if (!telefonoRegex.test(telContacto.value)) {
+                mostrarError(telContacto, "El teléfono debe tener 10 dígitos.");
+                esValido = false;
+            }
+        }
+
+        if (!emailContacto.value.trim()) {
+            mostrarError(emailContacto, "El correo electrónico es obligatorio.");
             esValido = false;
         } else {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailFiscal.value)) {
-                mostrarError(emailFiscal, "El correo electrónico no es válido.");
+            if (!emailRegex.test(emailContacto.value)) {
+                mostrarError(emailContacto, "El correo electrónico no es válido.");
                 esValido = false;
             }
         }
@@ -201,74 +198,75 @@
         mensajeModal.show();
     }
 
-    // Función para actualizar una sucursal
-    $("#editarSucursalForm").submit(function (event) {
+    // Función para actualizar una empresa
+    $("#editarEmpresaForm").submit(function (event) {
         event.preventDefault();
 
         if (!validarFormulario(this)) {
             return;
         }
 
-        const sucursalActualizada = {
-            id_empresa: $("#editarIdEmpresa").val(),
-            nombre_sucursal: $("#editarNombreSucursal").val(),
-            telefono: $("#editarTelefono").val(),
-            email_fiscal: $("#editarEmailFiscal").val()
+        const empresaActualizada = {
+            nombre_empresa: $("#editarNombreEmpresa").val(),
+            domicilio_empresa: $("#editarDomicilioEmpresa").val(),
+            nombre_contacto: $("#editarNombreContacto").val(),
+            tel_contacto: $("#editarTelContacto").val(),
+            email_contacto: $("#editarEmailContacto").val()
         };
 
-        const sucursalId = $("#editarSucursalId").val();
+        const empresaId = $("#editarEmpresaId").val();
 
         $.ajax({
-            url: `${API_URL}/${sucursalId}`,
+            url: `${API_URL}/${empresaId}`,
             type: "PUT",
             contentType: "application/json",
-            data: JSON.stringify(sucursalActualizada),
+            data: JSON.stringify(empresaActualizada),
             success: function () {
-                mostrarMensaje("Sucursal actualizada con éxito.", "success");
-                $("#editarSucursalModal").modal("hide");
-                cargarSucursales();
+                mostrarMensaje("Empresa actualizada con éxito.", "success");
+                $("#editarEmpresaModal").modal("hide");
+                cargarEmpresas();
             },
             error: function () {
-                mostrarMensaje("Error al actualizar la sucursal.", "error");
+                mostrarMensaje("Error al actualizar la empresa.", "error");
             }
         });
     });
 
-    // Función para guardar una nueva sucursal
-    $("#sucursalForm").submit(function (event) {
+    // Función para guardar una nueva empresa
+    $("#empresaForm").submit(function (event) {
         event.preventDefault();
 
         if (!validarFormulario(this)) {
             return;
         }
 
-        const nuevaSucursal = {
-            id_empresa: $("#id_empresa").val(),
-            nombre_sucursal: $("#nombre_sucursal").val(),
-            telefono: $("#telefono").val(),
-            email_fiscal: $("#email_fiscal").val()
+        const nuevaEmpresa = {
+            nombre_empresa: $("#nombre_empresa").val(),
+            domicilio_empresa: $("#domicilio_empresa").val(),
+            nombre_contacto: $("#nombre_contacto").val(),
+            tel_contacto: $("#tel_contacto").val(),
+            email_contacto: $("#email_contacto").val()
         };
 
         $.ajax({
             url: API_URL,
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify(nuevaSucursal),
+            data: JSON.stringify(nuevaEmpresa),
             success: function () {
-                mostrarMensaje("Sucursal registrada con éxito.", "success");
-                $("#sucursalForm")[0].reset();
-                $("#registrarSucursalModal").modal("hide");
-                cargarSucursales();
+                mostrarMensaje("Empresa registrada con éxito.", "success");
+                $("#empresaForm")[0].reset();
+                $("#registrarEmpresaModal").modal("hide");
+                cargarEmpresas();
             },
             error: function () {
-                mostrarMensaje("Error al registrar la sucursal.", "error");
+                mostrarMensaje("Error al registrar la empresa.", "error");
             }
         });
     });
 
-    // Cargar sucursales y empresas al cargar la página
+    // Cargar empresas al cargar la página
     $(document).ready(function () {
         cargarSucursales();
-        cargarEmpresas();
     });
 })();
