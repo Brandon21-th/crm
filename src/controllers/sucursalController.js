@@ -1,4 +1,5 @@
 const Sucursal = require('../models/sucursal');
+const Empresa = require('../models/empresa');
 
 exports.crearSucursal = async (req, res) => {
     try {
@@ -9,16 +10,21 @@ exports.crearSucursal = async (req, res) => {
     }
 };
 
-
 exports.obtenerSucursales = async (req, res) => {
     try {
-      const sucursales = await Sucursal.findAll({ where: { activa: '1' } });
-      res.status(200).json({ success: true, data: sucursales });
+        const sucursales = await Sucursal.findAll({
+            where: { activa: '1' },
+            include: {
+                model: Empresa,
+                attributes: ['nombre_empresa'] 
+            }
+        });
+        res.status(200).json({ success: true, data: sucursales });
     } catch (error) {
-      console.error('Error al obtener sucursales activas:', error);
-          res.status(500).json({ success: false, error: error.message });
+        console.error('Error al obtener sucursales activas:', error);
+        res.status(500).json({ success: false, error: error.message });
     }
-  };
+};
 
 exports.obtenerSucursal = async (req, res) => {
     try {

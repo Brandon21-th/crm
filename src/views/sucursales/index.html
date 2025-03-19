@@ -17,20 +17,19 @@
 
     <!-- Estilos personalizados -->
     <style>
-     
-         .nueva_empresa{
-            background-color: #198754!important;
+        .nueva_empresa {
+            background-color: #198754 !important;
             color: white;
-         }
+        }
 
-         .actualiza_empresa{
-            background-color: #0dcaf0!important;
+        .actualiza_empresa {
+            background-color: #0dcaf0 !important;
             color: white;
-         }
+        }
 
-        .elimina_empresa{
-                background-color: #dc3545!important;
-                color: white;
+        .elimina_empresa {
+            background-color: #dc3545 !important;
+            color: white;
         }
 
         .modal-body {
@@ -54,11 +53,12 @@
         <!-- Tabla para mostrar empresas -->
         <div class="card mt-4">
             <div class="card-body">
-              
+
                 <table id="sucursalTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Empresa</th>
                             <th>Sucursal</th>
                             <th>Teléfono</th>
                             <th>Correo</th>
@@ -73,40 +73,130 @@
         </div>
     </div>
 
-    <!-- Modal para registrar empresa -->
-    <div class="modal fade" id="registrarEmpresaModal" tabindex="-1" aria-labelledby="registrarEmpresaModalLabel"
+    <!-- Modal para registrar sucursal -->
+    <div class="modal fade" id="registrarSucursalModal" tabindex="-1" aria-labelledby="registrarSucursalModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header nueva_empresa">
-                    <h5 class="modal-title" id="registrarEmpresaModalLabel">Registrar Sucursal</h5>
+                <div class="modal-header nueva_sucursal">
+                    <h5 class="modal-title" id="registrarSucursalModalLabel">Registrar Sucursal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="empresaForm">
+                    <form id="sucursalForm">
                         <div class="mb-3">
-                            <label for="nombre_empresa" class="form-label">Nombre sucursal:</label>
-                            <input type="text" class="form-control" id="nombre_empresa" required />
+                            <label for="id_empresa" class="form-label">Empresa:</label>
+                            <select class="form-control" id="id_empresa" required>
+                                <!-- Opciones dinámicas -->
+                            </select>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="domicilio_empresa" class="form-label">Domicilio empresa:</label>
-                            <input type="text" class="form-control" id="domicilio_empresa" required />
+                            <label for="nombre_sucursal" class="form-label">Nombre Sucursal:</label>
+                            <input type="text" class="form-control" id="nombre_sucursal" required />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="nombre_contacto" class="form-label">Nombre del contacto:</label>
-                            <input type="text" class="form-control" id="nombre_contacto" pattern="[A-Za-z\s]+" required />
+                            <label for="tiempo_sesion" class="form-label">Tiempo de Sesión:</label>
+                            <input type="number" class="form-control" id="tiempo_sesion" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="tel_contacto" class="form-label">Teléfono:</label>
-                            <input type="text" class="form-control" id="tel_contacto" pattern="\d{10}" required />
+                            <label for="sloganEmpresa_Sel" class="form-label">Slogan:</label>
+                            <input type="text" class="form-control" id="sloganEmpresa_Sel" required />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="email_contacto" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="email_contacto" required />
+                            <label for="telefono" class="form-label">Teléfono:</label>
+                            <input type="text" class="form-control" id="telefono" required />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="includeInfoFiscal" class="form-label">Incluir Información Fiscal:</label>
+                            <select class="form-control" id="includeInfoFiscal">
+                                <option value="1">Sí</option>
+                                <option value="0">No</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rfc_fiscal" class="form-label">RFC Fiscal:</label>
+                            <input type="text" class="form-control" id="rfc_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_fiscal" class="form-label">Email Fiscal:</label>
+                            <input type="email" class="form-control" id="email_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="razon_social" class="form-label">Razón Social:</label>
+                            <input type="text" class="form-control" id="razon_social" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="calle_fiscal" class="form-label">Calle Fiscal:</label>
+                            <input type="text" class="form-control" id="calle_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="num_exterior_fiscal" class="form-label">Número Exterior Fiscal:</label>
+                            <input type="text" class="form-control" id="num_exterior_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="num_interior_fiscal" class="form-label">Número Interior Fiscal:</label>
+                            <input type="text" class="form-control" id="num_interior_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="colonia_fiscal" class="form-label">Colonia Fiscal:</label>
+                            <input type="text" class="form-control" id="colonia_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="localidad_fiscal" class="form-label">Localidad Fiscal:</label>
+                            <input type="text" class="form-control" id="localidad_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="municipio_fiscal" class="form-label">Municipio Fiscal:</label>
+                            <input type="text" class="form-control" id="municipio_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_estado_fiscal" class="form-label">Estado Fiscal:</label>
+                            <input type="number" class="form-control" id="id_estado_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cp_fiscal" class="form-label">Código Postal Fiscal:</label>
+                            <input type="text" class="form-control" id="cp_fiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regimen" class="form-label">Régimen:</label>
+                            <input type="text" class="form-control" id="regimen" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="serie" class="form-label">Serie:</label>
+                            <input type="text" class="form-control" id="serie" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noaprobacion" class="form-label">Número de Aprobación:</label>
+                            <input type="text" class="form-control" id="noaprobacion" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="no_certificado" class="form-label">Número de Certificado:</label>
+                            <input type="text" class="form-control" id="no_certificado" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwCertificado" class="form-label">Contraseña del Certificado:</label>
+                            <input type="text" class="form-control" id="passwCertificado" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <button type="submit" class="btn btn-success">Guardar</button>
@@ -116,50 +206,139 @@
         </div>
     </div>
 
-    <!-- Modal para editar empresa -->
-    <div class="modal fade" id="editarEmpresaModal" tabindex="-1" aria-labelledby="editarEmpresaModalLabel"
+    <!-- Modal para editar sucursal -->
+    <div class="modal fade" id="abrirEditarSucursalModal" tabindex="-1" aria-labelledby="editarSucursalModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header actualiza_empresa">
-                    <h5 class="modal-title" id="editarEmpresaModalLabel">Editar Empresa</h5>
+                <div class="modal-header actualiza_sucursal">
+                    <h5 class="modal-title" id="editarSucursalModalLabel">Editar Sucursal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editarEmpresaForm">
-                        <input type="hidden" id="editarEmpresaId">
+                    <form id="editarSucursalForm">
+                        <input type="hidden" id="editarSucursalId">
                         <div class="mb-3">
-                            <label for="editarNombreEmpresa" class="form-label">Nombre empresa:</label>
-                            <input type="text" class="form-control" id="editarNombreEmpresa" required />
+                            <label for="editarIdEmpresa" class="form-label">Empresa:</label>
+                            <select class="form-control" id="editarIdEmpresa" required>
+                                <!-- Opciones dinámicas -->
+                            </select>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="editarDomicilioEmpresa" class="form-label">Domicilio empresa:</label>
-                            <input type="text" class="form-control" id="editarDomicilioEmpresa" required />
+                            <label for="editarNombreSucursal" class="form-label">Nombre Sucursal:</label>
+                            <input type="text" class="form-control" id="editarNombreSucursal" required />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="editarNombreContacto" class="form-label">Nombre del contacto:</label>
-                            <input type="text" class="form-control" id="editarNombreContacto" pattern="[A-Za-z\s]+" required />
+                            <label for="editarTiempoSesion" class="form-label">Tiempo de Sesión:</label>
+                            <input type="number" class="form-control" id="editarTiempoSesion" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="editarTelContacto" class="form-label">Teléfono:</label>
-                            <input type="text" class="form-control" id="editarTelContacto" pattern="\d{10}" required />
+                            <label for="editarSloganEmpresa_Sel" class="form-label">Slogan:</label>
+                            <input type="text" class="form-control" id="editarSloganEmpresa_Sel" required />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="editarEmailContacto" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="editarEmailContacto" required />
+                            <label for="editarTelefono" class="form-label">Teléfono:</label>
+                            <input type="text" class="form-control" id="editarTelefono" required />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <button type="submit" class="btn btn-info actualiza_empresa">Actualizar</button>
+                        <div class="mb-3">
+                            <label for="editarIncludeInfoFiscal" class="form-label">Incluir Información Fiscal:</label>
+                            <select class="form-control" id="editarIncludeInfoFiscal">
+                                <option value="1">Sí</option>
+                                <option value="0">No</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarRfcFiscal" class="form-label">RFC Fiscal:</label>
+                            <input type="text" class="form-control" id="editarRfcFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarEmailFiscal" class="form-label">Email Fiscal:</label>
+                            <input type="email" class="form-control" id="editarEmailFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarRazonSocial" class="form-label">Razón Social:</label>
+                            <input type="text" class="form-control" id="editarRazonSocial" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarCalleFiscal" class="form-label">Calle Fiscal:</label>
+                            <input type="text" class="form-control" id="editarCalleFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarNumExteriorFiscal" class="form-label">Número Exterior Fiscal:</label>
+                            <input type="text" class="form-control" id="editarNumExteriorFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarNumInteriorFiscal" class="form-label">Número Interior Fiscal:</label>
+                            <input type="text" class="form-control" id="editarNumInteriorFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarColoniaFiscal" class="form-label">Colonia Fiscal:</label>
+                            <input type="text" class="form-control" id="editarColoniaFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarLocalidadFiscal" class="form-label">Localidad Fiscal:</label>
+                            <input type="text" class="form-control" id="editarLocalidadFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarMunicipioFiscal" class="form-label">Municipio Fiscal:</label>
+                            <input type="text" class="form-control" id="editarMunicipioFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarIdEstadoFiscal" class="form-label">Estado Fiscal:</label>
+                            <input type="number" class="form-control" id="editarIdEstadoFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarCpFiscal" class="form-label">Código Postal Fiscal:</label>
+                            <input type="text" class="form-control" id="editarCpFiscal" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarRegimen" class="form-label">Régimen:</label>
+                            <input type="text" class="form-control" id="editarRegimen" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarSerie" class="form-label">Serie:</label>
+                            <input type="text" class="form-control" id="editarSerie" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarNoAprobacion" class="form-label">Número de Aprobación:</label>
+                            <input type="text" class="form-control" id="editarNoAprobacion" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarNoCertificado" class="form-label">Número de Certificado:</label>
+                            <input type="text" class="form-control" id="editarNoCertificado" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarPasswCertificado" class="form-label">Contraseña del Certificado:</label>
+                            <input type="text" class="form-control" id="editarPasswCertificado" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <button type="submit" class="btn btn-info actualiza_sucursal">Actualizar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal genérico para mensajes -->
     <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
